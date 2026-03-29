@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - GVS Computer Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div id="loginModal" class="login-modal" style="background: rgba(0,0,0,0.5);">
+        <!-- Login modal content from index.html -->
+        <div class="login-container">
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('self')">Self Login</button>
+                <button class="tab-btn" onclick="switchTab('student')">Student Login</button>
+            </div>
+            
+            <div id="selfLogin" class="login-form active">
+                <h3>Admin Login</h3>
+                <input type="text" id="selfId" placeholder="ID: gvs-website">
+                <input type="password" id="selfPassword" placeholder="Password">
+                <button onclick="selfLogin()">Login</button>
+            </div>
+            
+            <div id="studentLogin" class="login-form">
+                <h3>Student Login</h3>
+                <input type="text" id="studentName" placeholder="Student Name">
+                <input type="password" id="studentPassword" placeholder="Password">
+                <button onclick="studentLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
