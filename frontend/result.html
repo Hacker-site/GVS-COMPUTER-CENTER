@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result - GVS Computer Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h2>GVS</h2></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="result-container">
+        <div id="resultContent">
+            <p>Loading your result...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Auto load result on page load
+        window.addEventListener('load', () => {
+            loadResult();
+        });
+    </script>
+</body>
+</html>
