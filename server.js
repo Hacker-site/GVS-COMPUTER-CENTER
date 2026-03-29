@@ -2,9 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const { Low } = require('lowdb');
 const { JSONFile } = require('lowdb/node');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,23 +15,24 @@ app.use(express.json());
 app.use(express.static('frontend'));
 app.use('/uploads', express.static('uploads'));
 
-// Database Setup
+// ✅ FIXED Database Setup
 const dbPath = path.join(__dirname, 'database.json');
-const defaultData = {
-    students: [],
-    results: {}
-};
-
-const adapter = new JSONFile(dbPath, defaultData);
+const adapter = new JSONFile(dbPath);
 const db = new Low(adapter);
 
-// Initialize database
 async function initDb() {
     await db.read();
-    db.data ||= defaultData;
+    if (!db.data) {
+        db.data = {
+            students: [],
+            results: {}
+        };
+    }
     await db.write();
 }
-initDb();
+
+// ✅ Call initDb properly
+initDb().catch(console.error);
 
 // Multer for file uploads
 const storage = multer.diskStorage({
@@ -70,14 +71,13 @@ app.post('/api/students/login', async (req, res) => {
 
 app.get('/api/students', async (req, res) => {
     await db.read();
-    res.json(db.data.students);
+    res.json(db.data.students || []);
 });
 
 app.post('/api/students', async (req, res) => {
     await db.read();
     const { name, password } = req.body;
     
-    // Check if student already exists
     if (db.data.students.find(s => s.name === name)) {
         return res.json({ success: false, message: 'Student already exists!' });
     }
@@ -96,19 +96,8 @@ app.post('/api/students', async (req, res) => {
 
 app.get('/api/students/:name/result', async (req, res) => {
     await db.read();
-    const student = db.data.students.find(s => s.name === req.params.name);
     const result = db.data.results[req.params.name];
-    
-    if (student && result) {
-        res.json({
-            name: student.name,
-            course: result.course || 'N/A',
-            marksheet: result.marksheet,
-            photo: result.photo
-        });
-    } else {
-        res.json({ name: student?.name || req.params.name });
-    }
+    res.json(result || {});
 });
 
 // Marksheet Upload
@@ -117,41 +106,22 @@ app.post('/api/marksheet', upload.single('marksheet'), async (req, res) => {
     const studentName = req.body.studentName;
     const marksheetPath = `/uploads/${req.file.filename}`;
     
-    if (!db.data.results[studentName]) {
-        db.data.results[studentName] = {};
-    }
+    if (!db.data.results) db.data.results = {};
+    if (!db.data.results[studentName]) db.data.results[studentName] = {};
     
     db.data.results[studentName].marksheet = marksheetPath;
-    db.data.results[studentName].uploadedAt = new Date().toISOString();
-    
     await db.write();
     
     res.json({ success: true, marksheet: marksheetPath });
 });
 
-// Serve other HTML pages
-app.get('/form.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'form.html'));
+// Serve all HTML pages
+app.get(/\.html$/, (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', req.path));
 });
 
-app.get('/login.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'login.html'));
-});
-
-app.get('/result.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'result.html'));
-});
-
-app.get('/about.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'about.html'));
-});
-
-app.get('/courses.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'courses.html'));
-});
-
-app.get('/contact.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'contact.html'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 app.listen(PORT, () => {
