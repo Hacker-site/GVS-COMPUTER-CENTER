@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GVS Computer Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-container">
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('self')">Self Login</button>
+                <button class="tab-btn" onclick="switchTab('student')">Student Login</button>
+            </div>
+            
+            <div id="selfLogin" class="login-form active">
+                <h3>Admin Login</h3>
+                <input type="text" id="selfId" placeholder="ID: gvs-website">
+                <input type="password" id="selfPassword" placeholder="Password">
+                <button onclick="selfLogin()">Login</button>
+            </div>
+            
+            <div id="studentLogin" class="login-form">
+                <h3>Student Login</h3>
+                <input type="text" id="studentName" placeholder="Student Name">
+                <input type="password" id="studentPassword" placeholder="Password">
+                <button onclick="studentLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>GVS</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" onclick="showPage('home')">Home</a></li>
+                <li><a href="#about" onclick="showPage('about')">About Us</a></li>
+                <li><a href="#courses" onclick="showPage('courses')">Courses</a></li>
+                <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+                <li><a href="form.html">Admission Form</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Section -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="animate-slide">Welcome to <span class="gradient-text">GVS Computer Center</span></h1>
+                <p class="animate-fade">Best Computer Training Institute with Modern Courses</p>
+                <div class="hero-buttons animate-pop">
+                    <a href="form.html" class="btn-primary">Join Now</a>
+                    <a href="#courses" class="btn-secondary" onclick="showPage('courses')">View Courses</a>
+                </div>
+            </div>
+            <div class="hero-image animate-float">
+                <div class="floating-card">CCC</div>
+                <div class="floating-card">DCA</div>
+                <div class="floating-card">Tally</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Status -->
+    <div id="studentStatus" class="student-status" style="display: none;">
+        <span>Student: <span id="currentStudent"></span></span>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <button onclick="showAdminOptions()">Admin Options</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
