@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Form - GVS Computer Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><h2>GVS</h2></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="form-container">
+        <div class="form-card">
+            <h1>Admission Form</h1>
+            <p>Fill in your details to join GVS Computer Center</p>
+            
+            <form id="admissionForm" class="form-grid">
+                <div class="form-group">
+                    <label>Student Name *</label>
+                    <input type="text" id="studentName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Roll Number</label>
+                    <input type="text" id="rollNumber">
+                </div>
+                
+                <div class="form-group">
+                    <label>Father's Name *</label>
+                    <input type="text" id="fatherName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Mother's Name *</label>
+                    <input type="text" id="motherName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Mobile No. *</label>
+                    <input type="tel" id="mobile" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email ID</label>
+                    <input type="email" id="email">
+                </div>
+                
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" id="dob">
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Address *</label>
+                    <textarea id="address" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Admission Date</label>
+                    <input type="date" id="admissionDate">
+                </div>
+                
+                <div class="form-group">
+                    <label>Aadhar No.</label>
+                    <input type="text" id="aadhar">
+                </div>
+                
+                <div class="form-group">
+                    <label>Course *</label>
+                    <select id="course" required>
+                        <option value="">Select Course</option>
+                        <option value="CCC">CCC</option>
+                        <option value="DCA">DCA</option>
+                        <option value="ADCA">ADCA</option>
+                        <option value="PGDCA">PGDCA</option>
+                        <option value="BCC">BCC</option>
+                        <option value="DTP">DTP</option>
+                        <option value="DADTP">DADTP</option>
+                        <option value="BCAD">BCAD</option>
+                        <option value="ADFD">ADFD</option>
+                        <option value="CCA">CCA</option>
+                        <option value="ADIT">ADIT</option>
+                        <option value="Tally GST">Tally GST</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Student Photo</label>
+                    <input type="file" id="studentPhoto" accept="image/*">
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('admissionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Form submitted successfully! Contact admin for verification.');
+            // Here you can send data to backend if needed
+        });
+    </script>
+</body>
+</html>
