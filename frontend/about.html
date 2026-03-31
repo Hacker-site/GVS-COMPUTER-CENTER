@@ -36,14 +36,162 @@
         <!-- Add Student Form -->
         <div id="addStudentForm" class="admin-form" style="display: none;">
             <h3>Add New Student</h3>
-            <input type="text" id="newStudentName" placeholder="Student Name">
-            <input type="text" id="newStudentRollNo" placeholder="Roll Number (Optional)">
-            <input type="password" id="newStudentPassword" placeholder="Password">
-            <button onclick="addNewStudent()">Add Student</button>
-            <button onclick="hideAddStudentForm()" class="cancel-btn">Cancel</button>
+            <input type="text" id="newStudentName" placeholder="Student Name *" required>
+            <input type="text" id="newStudentRollNo" placeholder="Roll Number">
+            <input type="password" id="newStudentPassword" placeholder="Password *" required>
+            <button class="submit-btn" onclick="addNewStudent()">✅ Add Student</button>
+            <button class="cancel-btn" onclick="hideAddStudentForm()">❌ Cancel</button>
+        </div>
+
+        <!-- Upload Marksheet Modal -->
+        <div id="uploadModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3>Select Student for Marksheet</h3>
+                <div id="studentSelectList" class="student-select-list"></div>
+                <button class="cancel-btn" onclick="closeUploadModal()">❌ Close</button>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // Admin
+        // Admin specific functions
+        async function showAllStudents() {
+            try {
+                const response = await fetch('/api/students');
+                const students = await response.json();
+                
+                const studentsList = document.getElementById('studentsList');
+                studentsList.innerHTML = `
+                    <h3>📋 All Students (${students.length})</h3>
+                    <div class="table-header">
+                        <span>Name</span>
+                        <span>Roll No</span>
+                        <span>Created</span>
+                        <span>Actions</span>
+                    </div>
+                `;
+                
+                students.forEach(student => {
+                    studentsList.innerHTML += `
+                        <div class="student-row">
+                            <span>${student.name}</span>
+                            <span>${student.rollNo || 'N/A'}</span>
+                            <span>${new Date(student.createdAt).toLocaleDateString()}</span>
+                            <div>
+                                <button onclick="uploadMarksheetFor('${student.name}')" class="action-btn upload">📄 Marksheet</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                studentsList.style.display = 'block';
+                document.getElementById('addStudentForm').style.display = 'none';
+                document.getElementById('uploadModal').style.display = 'none';
+            } catch (error) {
+                alert('Error loading students!');
+            }
+        }
+
+        function showAddStudentForm() {
+            document.getElementById('studentsList').style.display = 'none';
+            document.getElementById('addStudentForm').style.display = 'block';
+            document.getElementById('uploadModal').style.display = 'none';
+        }
+
+        function hideAddStudentForm() {
+            document.getElementById('addStudentForm').style.display = 'none';
+        }
+
+        async function addNewStudent() {
+            const name = document.getElementById('newStudentName').value;
+            const rollNo = document.getElementById('newStudentRollNo').value;
+            const password = document.getElementById('newStudentPassword').value;
+            
+            if (!name || !password) {
+                alert('Please fill required fields!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/students', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, password, rollNo })
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    alert('✅ Student added successfully!');
+                    hideAddStudentForm();
+                    document.getElementById('newStudentName').value = '';
+                    document.getElementById('newStudentRollNo').value = '';
+                    document.getElementById('newStudentPassword').value = '';
+                    showAllStudents();
+                }
+            } catch (error) {
+                alert('❌ Error adding student!');
+            }
+        }
+
+        async function showUploadMarksheet() {
+            try {
+                const response = await fetch('/api/students');
+                const students = await response.json();
+                
+                const selectList = document.getElementById('studentSelectList');
+                selectList.innerHTML = '';
+                
+                students.forEach(student => {
+                    selectList.innerHTML += `
+                        <button class="select-student-btn" onclick="uploadMarksheetFor('${student.name}')">
+                            ${student.name} ${student.rollNo ? `(${student.rollNo})` : ''}
+                        </button>
+                    `;
+                });
+                
+                document.getElementById('studentsList').style.display = 'none';
+                document.getElementById('addStudentForm').style.display = 'none';
+                document.getElementById('uploadModal').style.display = 'flex';
+            } catch (error) {
+                alert('Error loading students!');
+            }
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').style.display = 'none';
+        }
+
+        function uploadMarksheetFor(studentName) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('marksheet', file);
+                    formData.append('studentName', studentName);
+                    
+                    try {
+                        const response = await fetch('/api/results/upload', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const result = await response.json();
+                        if (result.success) {
+                            alert(`✅ Marksheet uploaded for ${studentName}!`);
+                            closeUploadModal();
+                            showAllStudents();
+                        }
+                    } catch (error) {
+                        alert('Upload failed!');
+                    }
+                }
+            };
+            input.click();
+        }
+    </script>
+</body>
+</html>
