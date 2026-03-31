@@ -1,17 +1,149 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Admin Styles */
+.admin-body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+.admin-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.admin-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+}
+
+.admin-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.admin-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.admin-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.admin-btn.primary { background: linear-gradient(135deg, #ffca28, #ffb300); color: #2c3e50; }
+.admin-btn.secondary { background: linear-gradient(135deg, #6c757d, #5a6268); color: white; }
+.admin-btn.success { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
+
+.admin-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.students-grid {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    font-weight: 700;
     color: #2c3e50;
-    overflow-x: hidden;
+    border-bottom: 3px solid #ffca28;
+    margin-bottom: 1rem;
 }
 
-.login-modal {
+.student-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.student-row:last-child {
+    border-bottom: none;
+}
+
+.action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.action-btn.upload {
+    background: #17a2b8;
+    color: white;
+}
+
+.action-btn.upload:hover {
+    background: #138496;
+    transform: translateY(-2px);
+}
+
+.admin-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    max-width: 500px;
+    margin: 2rem auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.admin-form h3 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.admin-form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.submit-btn, .cancel-btn {
+    width: 48%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 1%;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #ffca28, #ffb300);
+    color: #2c3e50;
+}
+
+.cancel-btn {
+    background: #6c757d;
+    color: white;
+}
+
+/* Modal Styles */
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -22,432 +154,96 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    animation: fadeIn 0.3s ease;
 }
 
-.login-container {
+.modal-content {
     background: white;
     padding: 2rem;
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    max-width: 400px;
-    width: 90%;
-    animation: slideUp 0.4s ease;
-}
-
-.login-tabs {
-    display: flex;
-    margin-bottom: 1.5rem;
-}
-
-.tab-btn {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    background: #f8f9fa;
-    border-radius: 10px 10px 0 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.tab-btn.active {
-    background: #ffca28;
-    color: #2c3e50;
-    font-weight: 600;
-}
-
-.login-form {
-    display: none;
-}
-
-.login-form.active {
-    display: block;
-}
-
-.login-form h3 {
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
-    text-align: center;
-}
-
-.login-form input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 1rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.login-form input:focus {
-    outline: none;
-    border-color: #ffca28;
-    box-shadow: 0 0 0 3px rgba(255,202,40,0.1);
-}
-
-.login-form button {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #ffca28, #ffb300);
-    color: #2c3e50;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.login-form button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(255,202,40,0.3);
-}
-
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-    padding: 1rem 0;
-    transition: all 0.3s ease;
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo h2 {
-    background: linear-gradient(135deg, #ffca28, #ffb300);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-menu a {
-    text-decoration: none;
-    color: #2c3e50;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-menu a:hover {
-    color: #ffca28;
-}
-
-.nav-menu a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background: #ffca28;
-    transition: width 0.3s ease;
-}
-
-.nav-menu a:hover::after {
-    width: 100%;
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: #2c3e50;
-    margin: 3px 0;
-    transition: 0.3s;
-}
-
-.page {
-    display: none;
-    min-height: 100vh;
-    padding-top: 100px;
-}
-
-.page.active {
-    display: block;
-}
-
-.hero {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.hero-content h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-}
-
-.gradient-text {
-    background: linear-gradient(135deg, #ffca28, #ffb300);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-content p {
-    font-size: 1.3rem;
-    color: #5a6c7d;
-    margin-bottom: 2rem;
     max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
-.btn-primary, .btn-secondary {
-    display: inline-block;
-    padding: 15px 30px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-right: 1rem;
+.student-select-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin: 1rem 0;
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #ffca28, #ffb300);
-    color: #2c3e50;
-    box-shadow: 0 10px 20px rgba(255,202,40,0.3);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(255,202,40,0.4);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: #2c3e50;
-    border: 2px solid #2c3e50;
-}
-
-.btn-secondary:hover {
-    background: #2c3e50;
-    color: white;
-}
-
-.hero-image {
-    position: relative;
-    height: 400px;
-}
-
-.floating-card {
-    position: absolute;
-    background: white;
-    padding: 20px 30px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffca28;
-    animation: float 6s ease-in-out infinite;
-}
-
-.floating-card:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
-.floating-card:nth-child(2) { top: 50%; right: 10%; animation-delay: 2s; }
-.floating-card:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 4s; }
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-.animate-slide { animation: slideUp 1s ease forwards; opacity: 0; }
-.animate-fade { animation: fadeIn 1s ease 0.5s forwards; opacity: 0; }
-.animate-pop { animation: slideUp 0.8s ease 1s forwards; opacity: 0; }
-.animate-float { animation: float 6s ease-in-out infinite; }
-
-.student-status {
-    position: fixed;
-    top: 100px;
-    right: 2rem;
-    background: #ffca28;
-    color: #2c3e50;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 600;
-    box-shadow: 0 5px 15px rgba(255,202,40,0.4);
-    z-index: 99;
-}
-
-.admin-panel {
-    position: fixed;
-    top: 100px;
-    left: 2rem;
-    z-index: 99;
-}
-
-.admin-panel button {
-    background: #2c3e50;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.admin-panel button:hover {
-    background: #ffca28;
-    color: #2c3e50;
-    transform: translateY(-2px);
-}
-
-/* Result Page Styling */
-.result-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.marksheet {
-    background: linear-gradient(135deg, #fff8e1 0%, #fef5e7 100%);
-    border: 5px solid #2c3e50;
-    border-radius: 15px;
-    padding: 3rem;
-    position: relative;
-    margin-bottom: 2rem;
-}
-
-.marksheet::before {
-    content: "GVS COMPUTER CENTER";
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #2c3e50;
-    color: white;
-    padding: 8px 30px;
-    border-radius: 25px;
-    font-weight: 700;
-    font-size: 1.1rem;
-}
-
-.marksheet-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.marksheet-header h1 {
-    color: #2c3e50;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-.student-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 4px solid #ffca28;
-    object-fit: cover;
-    margin: 0 auto 1rem;
-    display: block;
-}
-
-.student-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.info-row {
-    background: white;
+.select-student-btn {
+    width: 100%;
     padding: 15px;
-    border-radius: 10px;
-    border-left: 4px solid #ffca28;
-}
-
-.download-btns {
-    text-align: center;
-}
-
-.download-btn {
-    display: inline-block;
-    margin: 0 10px;
-    padding: 12px 24px;
+    margin: 8px 0;
     background: linear-gradient(135deg, #ffca28, #ffb300);
     color: #2c3e50;
-    text-decoration: none;
-    border-radius: 25px;
+    border: none;
+    border-radius: 12px;
     font-weight: 600;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.download-btn:hover {
+.select-student-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(255,202,40,0.4);
 }
 
+/* Result Page Improvements */
+.loading {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #666;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #ffca28;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.marksheet-image img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    margin: 2rem 0;
+}
+
+.download-section {
+    text-align: center;
+    margin-top: 2rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    .hamburger {
-        display: flex;
-    }
-    
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
+    .admin-buttons {
         flex-direction: column;
-        background-color: white;
+        align-items: center;
+    }
+    
+    .admin-btn {
         width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0,0,0,0.05);
-        padding: 2rem 0;
+        max-width: 300px;
     }
     
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .hero {
+    .table-header, .student-row {
         grid-template-columns: 1fr;
-        text-align: center;
-        gap: 2rem;
+        gap: 0.5rem;
     }
     
-    .student-status {
-        right: 1rem;
-        left: 1rem;
-        top: 90px;
-        text-align: center;
-    }
-    
-    .admin-panel {
-        left: 1rem;
-        top: 90px;
+    .admin-form {
+        margin: 1rem;
+        padding: 1.5rem;
     }
 }
