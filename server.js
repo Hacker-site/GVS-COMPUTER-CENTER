@@ -112,16 +112,10 @@ app.post('/api/results/upload', upload.single('marksheet'), (req, res) => {
     res.json({ success: true, marksheet: `/uploads/${filename}` });
 });
 
-// Serve Frontend
-app.get('*', (req, res) => {
-    const filePath = req.path === '/' ? 'index.html' : req.path.replace('/', '');
-    const fullPath = path.join(__dirname, 'frontend', filePath);
-    
-    if (fs.existsSync(fullPath)) {
-        res.sendFile(fullPath);
-    } else {
-        res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
-    }
+// Serve Frontend Pages
+app.get(['/', '/index.html', '/about.html', '/courses.html', '/contact.html', '/form.html', '/login.html', '/result.html', '/admin.html'], (req, res) => {
+    const page = req.path === '/' ? 'index.html' : req.path.replace('/', '');
+    res.sendFile(path.join(__dirname, 'frontend', page));
 });
 
 app.listen(PORT, () => {
